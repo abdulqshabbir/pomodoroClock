@@ -114,7 +114,6 @@ $(document).ready(function () {
 	}
 
 	var canvas = document.getElementById('myCanvas');
-	canvas.style.position = 'absolute';
 	canvas.style.border = '1px solid black';
 	canvas.style.top = '50px';
 	canvas.style.left = '50px';

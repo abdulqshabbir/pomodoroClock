@@ -53,32 +53,7 @@ require('load-grunt-tasks')(grunt);
                     files: 'css/*.sass',
                     tasks: ['concat', 'sass', 'autoprefixer'],
                 },
-                karma: {
-                    files: ['js/*.js', 'jquery.min.js'],
-                }
             },
-            karma: {
-                unit: {
-                    files: [{ src: ['assets/jquery.min.js'], served: true, included: false }],
-                    singleRun: true,
-                    logLevel: 'ERROR',
-                    background: true,
-                    options: {
-                        files: ['test/**/*.js'],
-                        tasks: ['karma:unit:run']
-                    }
-                }
-            },
-            jasmine: {
-                pivotal: {
-                    src: 'js/*.js',
-                        options: {
-                            specs: 'js/first.js',
-                            outfile: 'dest/_SpecRunner.html',
-                            keepRunner: 'true'
-                    }
-                }
-            }
     });
     //Where we tell Grunt we plan to use this plug-in.
         grunt.loadNpmTasks('grunt-contrib-concat');
@@ -88,6 +63,6 @@ require('load-grunt-tasks')(grunt);
         grunt.loadNpmTasks('grunt-karma');
         grunt.loadNpmTasks('grunt-contrib-jasmine');
     //Where we tell Grunt what to do when we type "grunt" into the terminal.
-        grunt.registerTask('default', ['concat', 'babel', 'jshint', 'sass', 'autoprefixer', 'jasmine']);
+        grunt.registerTask('default', ['concat', 'babel', 'jshint', 'sass', 'autoprefixer']);
         grunt.registerTask('grunt watch');
 };
