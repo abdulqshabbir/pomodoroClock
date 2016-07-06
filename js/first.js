@@ -35,14 +35,14 @@ $(document).ready(function() {
 	var myTimerTheme = {
 		getRunningTimerColor: getRunningTimerColor,
 		getPausedTimerColor: getPausedTimerColor,
-	}; 
+	};
 
 function getRunningTimerColor() {
 	if(myTimer.isRunning) {
 		$("body").removeClass("teal lighten-5").addClass("red lighten-2");
 		$(".card-panel").removeClass("teal lighten-3").addClass("red darken-4");
 		$(".btn").addClass("red darken-4");
-	}
+	} 
 }
 
 function getPausedTimerColor() {
