@@ -3,12 +3,15 @@ $(document).ready(function() {
 //-----------------------------Event Handlers -------------------------------------
 	$("#startTimerButton").on("click", function startButtonHandler() {
 		myTimer.startTimer();
+		myTimerTheme.getRunningTimerColor();
 	});
 	$("#pauseTimerButton").on("click", function pauseButtonHandler() {
 		myTimer.pauseTimer();
+		myTimerTheme.getPausedTimerColor();
 	});
 	$("#stopTimerButton").on("click", function stopButtonHandler() {
 		myTimer.stopTimer();
+		myTimerTheme.getStoppedTimerColor(); 
 	});
 	$("#increentTimer").on("click", function incrementTimerHandler() {
 		myTimer.incrementTimeByOneMinute();
@@ -17,7 +20,7 @@ $(document).ready(function() {
 		myTimer.decrementTimeByOneMinute();
 	});
 
-//----------------------------Timer Object with methods------------------
+//----------------------------Timer Object With Methods------------------------
 	var myTimer = {
 		isRunning: false,
 		intervalID: null,
@@ -31,27 +34,38 @@ $(document).ready(function() {
 		totalTimeInSeconds: totalTimeInSeconds,
 	};
 
-//-----------------------------My Timer Theme Object with Methods ----------
+//------------------------'Theme' Object with Methods ----------------------
 	var myTimerTheme = {
 		getRunningTimerColor: getRunningTimerColor,
 		getPausedTimerColor: getPausedTimerColor,
+		getStoppedTimerColor: getStoppedTimerColor,
 	};
 
+//Timer Color While Running
 function getRunningTimerColor() {
 	if(myTimer.isRunning) {
 		$("body").removeClass("teal lighten-5").addClass("red lighten-2");
 		$(".card-panel").removeClass("teal lighten-3").addClass("red darken-4");
 		$(".btn").addClass("red darken-4");
-	} 
+	}
 }
 
+//Timer Color While Paused
 function getPausedTimerColor() {
 	if(!myTimer.isRunning) {
 		$("body").removeClass("red ligten-2").addClass("orange lighten-2");
 		$(".card-panel").removeClass("red darken-4").addClass("orange darken-3");
 		$(".btn").removeClass("red darken-4").addClass("orange darken-3");
 	}
-	$(".card-panel").removeClass("purple darken-2").addClass("green");
+}
+
+//Timer Color While Stopped
+function getStoppedTimerColor() {
+	if(!myTimer.isRunning) {
+		$("body").removeClass("orange lighten-2").addClass("teal lighten-5");
+		$(".card-panel").removeClass("orange darken-3").addClass("teal lighten-3");
+		$(".btn").removeClass("orange darken-3");
+	}
 }
 
 //Fetch current minutes
@@ -70,7 +84,6 @@ function getPausedTimerColor() {
 		if(!myTimer.isRunning) {
 			myTimer.isRunning = true;
 			myTimer.intervalID = setInterval(startTimerCountdown, 1000);
-			myTimerTheme.getRunningTimerColor();
 		}
 	}
 
@@ -114,7 +127,6 @@ function getPausedTimerColor() {
 		myTimer.isRunning = false;
 		clearInterval(myTimer.intervalID);
 		myTimer.intervalID = null;
-		myTimerTheme.getPausedTimerColor();
 	}
 
 	function stopTimer() {
@@ -140,46 +152,4 @@ function getPausedTimerColor() {
 			$("#minutes").html(minutes);
 		}
 	}
-
-	function totalTimeInSeconds() {
-		return Number(myTimer.minutes()*60) + Number(myTimer.seconds());
-	}
-
-
-	var canvas = document.getElementById('myCanvas');
-	canvas.style.border = '1px solid black';
-	canvas.style.top = '50px';
-	canvas.style.left = '50px';
-	var context = canvas.getContext('2d');
-	var raf;
-
-	var pomodoroTimer = {
-		positionX: canvas.width/2,
-		positionY: canvas.height/2,
-		radius: 50,
-		startAngle: -0.5*Math.PI,
-		endAngle: -0.5*Math.PI,
-		draw: draw,
-		animate: animate,
-	};
-
-	function draw() {
-		context.beginPath();
-		context.arc(this.positionX, this.positionY, this.radius, this.startAngle, this.endAngle, false);
-		context.lineWidth = 10;
-		context.stroke();
-	}
-
-	function animate() {
-		context.clearRect(0, 0, canvas.width, canvas.height);
-		pomodoroTimer.draw();
-		pomodoroTimer.endAngle = pomodoroTimer.endAngle + (0.1*Math.PI);
-		raf = requestAnimationFrame(animate);
-	}
-	pomodoroTimer.draw();
-
-	if (myTimer.isRunning) {
-		pomodoroTimer.animate();
-	}
-
 });
