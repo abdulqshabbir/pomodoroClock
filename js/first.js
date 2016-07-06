@@ -35,7 +35,7 @@ $(document).ready(function() {
 	var myTimerTheme = {
 		getRunningTimerColor: getRunningTimerColor,
 		getPausedTimerColor: getPausedTimerColor,
-	};
+	}; 
 
 function getRunningTimerColor() {
 	if(myTimer.isRunning) {
