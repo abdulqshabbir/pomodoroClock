@@ -1,30 +1,28 @@
 $(document).ready(function() {
+
+//-----------------------------Event Handlers -------------------------------------
 	$("#startTimerButton").on("click", function startButtonHandler() {
 		myTimer.startTimer();
 	});
-
 	$("#pauseTimerButton").on("click", function pauseButtonHandler() {
 		myTimer.pauseTimer();
 	});
-
 	$("#stopTimerButton").on("click", function stopButtonHandler() {
 		myTimer.stopTimer();
 	});
-
-	$("#incrementTimer").on("click", function incrementTimerHandler() {
+	$("#increentTimer").on("click", function incrementTimerHandler() {
 		myTimer.incrementTimeByOneMinute();
 	});
-
 	$("#decrementTimer").on("click", function decrementTimerHandler() {
 		myTimer.decrementTimeByOneMinute();
 	});
 
+//----------------------------Timer Object with methods------------------
 	var myTimer = {
 		isRunning: false,
 		intervalID: null,
 		minutes: minutes,
 		seconds: seconds,
-		decrementTime: decrementTimer,
 		startTimer: startTimer,
 		pauseTimer: pauseTimer,
 		stopTimer: stopTimer,
@@ -33,29 +31,64 @@ $(document).ready(function() {
 		totalTimeInSeconds: totalTimeInSeconds,
 	};
 
+//-----------------------------My Timer Theme Object with Methods ----------
+	var myTimerTheme = {
+		getRunningTimerColor: getRunningTimerColor,
+		getPausedTimerColor: getPausedTimerColor,
+	};
+
+function getRunningTimerColor() {
+	if(myTimer.isRunning) {
+		$("body").removeClass("teal lighten-5").addClass("red lighten-2");
+		$(".card-panel").removeClass("teal lighten-3").addClass("red darken-4");
+		$(".btn").addClass("red darken-4");
+	}
+}
+
+function getPausedTimerColor() {
+	if(!myTimer.isRunning) {
+		$("body").removeClass("red ligten-2").addClass("orange lighten-2");
+		$(".card-panel").removeClass("red darken-4").addClass("orange darken-3");
+		$(".btn").removeClass("red darken-4").addClass("orange darken-3");
+	}
+	$(".card-panel").removeClass("purple darken-2").addClass("green");
+}
+
+//Fetch current minutes
 	function minutes() {
 		var minutes = $("#minutes").html();
 		return minutes;
 	}
 
+//Fetch current seconds
 	function seconds() {
 		var seconds = $("#seconds").html();
 		return seconds;
 	}
 
 	function startTimer() {
-		myTimer.isRunning = true;
-		myTimer.intervalID = setInterval(decrementTimer, 1000);
+		if(!myTimer.isRunning) {
+			myTimer.isRunning = true;
+			myTimer.intervalID = setInterval(startTimerCountdown, 1000);
+			myTimerTheme.getRunningTimerColor();
+		}
 	}
 
-	function decrementTimer() {
+//decrement timer by one
+	function startTimerCountdown() {
 		var seconds = myTimer.seconds();
 		var minutes = myTimer.minutes();
 
 		if(myTimer.isRunning && seconds >=1) {
-			seconds = seconds - 1;
-			$("#seconds").html(seconds);
-
+		//if number of seconds is less than 9, add leading zero
+			if(seconds <= 9) {
+				seconds = seconds - 1;
+				$("#seconds").html("0" + seconds);
+		//else, decrement time as usual
+			} else {
+				seconds = seconds - 1;
+				$("#seconds").html(seconds);
+			}
 		} else if(myTimer.isRunning && seconds <= 0 && minutes >= 0) {
 			decrementMinutes();
 
@@ -78,19 +111,18 @@ $(document).ready(function() {
 	}
 
 	function pauseTimer() {
-		var seconds = myTimer.seconds();
-		var minutes = myTimer.minutes();
 		myTimer.isRunning = false;
 		clearInterval(myTimer.intervalID);
 		myTimer.intervalID = null;
+		myTimerTheme.getPausedTimerColor();
 	}
 
 	function stopTimer() {
 		myTimer.isRunning = false;
 		clearInterval(myTimer.intervalID);
 		myTimer.intervalID = null;
-		$("#seconds").html(0);
-		$("#minutes").html(25);
+		$("#seconds").html('00');
+		$("#minutes").html('25');
 	}
 
 	function incrementTimeByOneMinute() {
@@ -115,7 +147,6 @@ $(document).ready(function() {
 
 
 	var canvas = document.getElementById('myCanvas');
-	canvas.style.position = 'absolute';
 	canvas.style.border = '1px solid black';
 	canvas.style.top = '50px';
 	canvas.style.left = '50px';
@@ -149,19 +180,6 @@ $(document).ready(function() {
 
 	if (myTimer.isRunning) {
 		pomodoroTimer.animate();
-	}
-	function hello() {
-		return 'hello';
-	}
-
-	describe("test suite", function() {
-		it('expect to pass', function() {
-			expect(true).toBe(true);
-		});
-	});
-
-	function secondHello() {
-		return 'second hello !';
 	}
 
 });

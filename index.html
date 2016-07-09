@@ -3,45 +3,41 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="assets/materialize.min.css">
     <link rel="stylesheet" href="dest/styles_autoprefixed.css">
     <title>My Pomodoro Timer</title>
 </head>
 <body class="teal lighten-5">
     <div class="container row">
-    <div class="card-panel teal lighten-3 col m6 offset-m3">
+    <div class="card-panel z-depth-0 teal lighten-3 col m6 offset-m3">
         <h3 class="center">My Pomodoro Timer!</h3>
-        <div>
-            <p id="sessionLength"></p>
-        </div>
         <div class="center timeWrapper">
-            <p id='time'><span id='minutes'>25</span><span>:</span><span id='seconds'>00</span></p>
-        </div>
-
+            <span id='minutes'>25</span><span>:</span><span id='seconds'>00</span>
+        </div> 
         <div class="center">
-            <button type="button" class="btn btn-large" id="startTimerButton">
+            <button type="button" class="btn btn-large z-depth-0 waves-effect waves-dark" id="startTimerButton">
                 <i class="material-icons small">play_circle_filled</i>
             </button>
 
-            <button type="button" class="btn btn-large" id="pauseTimerButton">
+            <button type="button" class="btn btn-large z-depth-0 waves-effect waves-dark" id="pauseTimerButton">
                 <i class="material-icons small">pause_circle_filled</i>
             </button>
 
-            <button type="button" class="btn btn-large" id="stopTimerButton">
+            <button type="button" class="btn btn-large z-depth-0 waves-effect waves-dark" id="stopTimerButton">
                 <i class="material-icons small">stop</i>
             </button>
 
-            <button type="button" class="btn btn-large" id="incrementTimer">
+            <button type="button" class="btn btn-large z-depth-0 waves-effect waves-dark" id="incrementTimer">
                 <i class="material-icons small">+</i>
             </button>
 
-            <button type="button" class="btn btn-large" id="decrementTimer">
+            <button type="button" class="btn btn-large z-depth-0 waves-effect waves-dark" id="decrementTimer">
                 <i class="material-icons small">-</i>
             </button>
             </div>
         </div>
-        <!--<canvas id="myCanvas" width="300" height="300"></canvas>-->
+        <!-- <canvas id="myCanvas" width="300" height="300"></canvas> -->
     </div>
     <script src="assets/jquery.min.js"></script>
 	<script src="assets/materialize.min.js"></script>
